@@ -7,19 +7,10 @@
                           [width 500]
                           [height 500]))
 
-;; (define msg (new message% [parent frame]
-;;                  [label "No events so far..."]))
-
-;; (new button% [parent frame]
-;;              [label "Click Me"]
-;;              ; Callback procedure for a button click:
-;;              [callback (lambda (button event)
-;;                          (send msg set-label "Button click"))])
-
 ;;; From: http://docs.racket-lang.org/gui/editor-overview.html
-(define c (new editor-canvas% [parent frame]))
-(define t (new text%))
-(send c set-editor t)
+(define canvas (new editor-canvas% [parent frame]))
+(define editor (new text%))
+(send canvas set-editor editor)
 
 ;; Menus n shit
 (define mb (new menu-bar% [parent frame]))
@@ -33,11 +24,11 @@
                     [parent m-file]
                     [shortcut #\s]
                     [callback (lambda (x y)
-                                (send t save-file "test.md"))]))
-(send t set-max-undo-history 100)
+                                (send editor save-file "test.md"))]))
+(send editor set-max-undo-history 100)
 
 ;; Load a test file:
-(send t load-file "test.md" 'text)
+(send editor load-file "test.md" 'text)
  
 ; Show the frame by calling its show method
 (send frame show #t)
