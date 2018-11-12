@@ -7,6 +7,12 @@
                           [width 500]
                           [height 500]))
 
+;; Useful for debugging:
+;; (send msg set-label "waddup")
+;; (define msg (new message%
+;;                  [parent frame]
+;;                  [label "Nothing yet"]))
+
 ;; see: http://docs.racket-lang.org/gui/horizontal-panel_.html
 (define panel (new horizontal-panel% [parent frame]))
 
@@ -30,12 +36,24 @@
                       path->string)
              paths))))
 
+;; see: http://docs.racket-lang.org/gui/control-event_.html
+;; (callbacks always get the component and the event)
+(define open-file-in-editor
+  (λ (component event)
+    (if (member (send event get-event-type)
+                '(list-box-dclick list-box))
+        (send editor load-file
+              (send component get-string-selection)
+              'text)
+        #f)))
+
 ;; First child of `panel`, will be aligned to the left.
 ;; see: http://docs.racket-lang.org/gui/list-box_.html
 (define project-files (new list-box%
                            [label "Project Name"]
-                           [choices (as-titles (get-markdown-files))]
+                           [choices (map path->string (get-markdown-files))]
                            [parent panel]
+                           [callback open-file-in-editor]
                            [style '(vertical-label single)]
                            [min-width 150]
                            [stretchable-width #f]))
@@ -48,7 +66,6 @@
                     [min-width 350]))
 
 (send canvas set-editor editor)
-
 
 ;; Menus n shit
 (define mb (new menu-bar% [parent frame]))
@@ -65,9 +82,6 @@
                                 (send editor save-file "test.md"))]))
 (send editor set-max-undo-history 100)
 
-;; Load a test file:
-(send editor load-file "test.md" 'text)
- 
 ; Show the frame by calling its show method
 (send frame show #t)
 
