@@ -23,10 +23,17 @@
 
 ;; Menus n shit
 (define mb (new menu-bar% [parent frame]))
+(define m-file (new menu% [label "File"] [parent mb]))
 (define m-edit (new menu% [label "Edit"] [parent mb]))
 (define m-font (new menu% [label "Font"] [parent mb]))
 (append-editor-operation-menu-items m-edit #t)
 (append-editor-font-menu-items m-font)
+(define m-save (new menu-item%
+                    [label "Save"]
+                    [parent m-file]
+                    [shortcut #\s]
+                    [callback (lambda (x y)
+                                (send t save-file "test.md"))]))
 (send t set-max-undo-history 100)
 
 ;; Load a test file:
