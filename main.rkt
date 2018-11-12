@@ -58,6 +58,14 @@
   (λ ()
     (get-directory "Choose the base directory" frame)))
 
+;; Notice that split-path returns multiple values:
+;; see: https://docs.racket-lang.org/reference/Manipulating_Paths.html?q=split-path#%28def._%28%28quote._~23~25kernel%29._split-path%29%29
+;; but see: https://stackoverflow.com/a/20556950
+(define get-dir-name
+  (λ (absolute-path)
+    (let-values ([(base name is-dir) (split-path absolute-path)])
+      (path->string name))))
+
 (define save-current-file
   (λ (c e)
     (unless (null? current-file)
@@ -80,6 +88,7 @@
     (let ([directory (get-user-dir)])
       (when (directory-exists? directory)
         (set! current-project (path->string directory))
+        (send project-files set-label (get-dir-name directory))
         (send project-files set (get-markdown-files directory))))))
 
 ;;; From: http://docs.racket-lang.org/gui/editor-overview.html
