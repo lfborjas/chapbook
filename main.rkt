@@ -97,6 +97,11 @@
                     [parent panel]
                     [min-width 350]))
 
+
+;; Set some UI default preferences, set editor on canvas.
+;; https://docs.racket-lang.org/gui/canvas___.html#%28meth._%28%28%28lib._mred%2Fmain..rkt%29._canvas~3c~25~3e%29._set-canvas-background%29%29
+;; and: https://docs.racket-lang.org/draw/color-database___.html?q=color%25
+(send canvas set-canvas-background (make-object color% 10 41 50))
 (send canvas set-editor editor)
 
 ;; Menus n shit
