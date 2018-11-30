@@ -109,23 +109,25 @@
 (send canvas set-canvas-background (make-object color% 253 246 227))
 ;; foreground color: the green of my faber castell moss green ink:
 ;; https://www.gouletpens.com/products/graf-von-faber-castell-moss-green-75ml-bottled-ink
-(editor:set-default-font-color (make-object color%  45 106 73))
+
 
 ;; https://docs.racket-lang.org/gui/text_.html?q=text%25#%28meth._%28%28%28lib._mred%2Fmain..rkt%29._text~25%29._set-padding%29%29
-(send editor set-padding
+
+
+(define (setup-editor)
+  (editor:set-default-font-color (make-object color%  45 106 73))
+  (send editor set-padding
       15 ;; left
       15 ;; top
       ;; right and bottom
       0 0 )
-
-
-(define (setup-editor)
   ;; adds a ton of functions to the keymap:
   ;; https://docs.racket-lang.org/framework/Keymap.html?q=set-keymap#%28def._%28%28lib._framework%2Fmain..rkt%29._keymap~3asetup-global%29%29
   (send editor set-keymap (keymap:get-global))
+  (send editor set-max-undo-history 100)
   (send canvas set-editor editor))
+
 (setup-editor)
-(send canvas set-editor editor)
 
 ;; Menus n shit
 (define mb (new menu-bar% [parent frame]))
@@ -147,7 +149,7 @@
                             [shortcut #\o]
                             [callback open-project]))
 
-(send editor set-max-undo-history 100)
+
 
 ; Show the frame by calling its show method
 (send frame show #t)
