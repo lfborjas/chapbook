@@ -22,3 +22,7 @@ with the examples. For GUI basics, see:
 
 * https://docs.racket-lang.org/gui/windowing-overview.html
 * https://docs.racket-lang.org/gui/editor-overview.html
+
+### Documentation and examples
+
+* https://github.com/alex-hhh/ActivityLog2/blob/c45d62cb1ab5e79c6717d6a247406d31084e220d/rkt/widgets/notes-input-field.rkt#L61-L69

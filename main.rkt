@@ -1,5 +1,7 @@
 #lang racket/gui
 
+(require framework)
+
 ;;; GLOBAL STATE, I'M SORRY GOD
 
 (define current-project null)
@@ -22,7 +24,14 @@
 (define panel (new horizontal-panel% [parent frame]))
 
 ;;; From: http://docs.racket-lang.org/gui/editor-overview.html
-(define editor (new text%))
+;; mixins: https://docs.racket-lang.org/guide/classes.html#%28part._.Mixins%29
+;;
+(define mixins (compose text:foreground-color-mixin
+                        
+                        ;;other mixins here: https://docs.racket-lang.org/framework/Text.html?q=font%20color#%28def._%28%28lib._framework%2Fmain..rkt%29._text~3aforeground-color~3c~25~3e%29%29
+                        editor:standard-style-list-mixin))
+(define editor (new
+                (mixins text:basic%)))
 
 ;;; TODO: move these to a module!
 (define is-markdown-filename?
@@ -31,15 +40,6 @@
 
 (define (get-markdown-files [project (current-directory)])
   (map path->string (filter is-markdown-filename? (directory-list project))))
-
-(define as-titles
-  (λ (paths)
-    (let ([remove-extension (λ (name)
-                              (string-replace name ".md" ""))])
-        (map (compose string-titlecase
-                      remove-extension
-                      path->string)
-             paths))))
 
 (define in-project
   (λ (filename)
@@ -101,7 +101,12 @@
 ;; Set some UI default preferences, set editor on canvas.
 ;; https://docs.racket-lang.org/gui/canvas___.html#%28meth._%28%28%28lib._mred%2Fmain..rkt%29._canvas~3c~25~3e%29._set-canvas-background%29%29
 ;; and: https://docs.racket-lang.org/draw/color-database___.html?q=color%25
-(send canvas set-canvas-background (make-object color% 10 41 50))
+
+;; for the color: https://tex.stackexchange.com/a/390623
+(send canvas set-canvas-background (make-object color% 253 246 227))
+;; foreground color: the green of my faber castell moss green ink:
+;; https://www.gouletpens.com/products/graf-von-faber-castell-moss-green-75ml-bottled-ink
+(editor:set-default-font-color (make-object color%  45 106 73))
 (send canvas set-editor editor)
 
 ;; Menus n shit
