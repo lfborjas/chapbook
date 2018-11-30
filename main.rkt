@@ -117,6 +117,14 @@
       15 ;; top
       ;; right and bottom
       0 0 )
+
+
+(define (setup-editor)
+  ;; adds a ton of functions to the keymap:
+  ;; https://docs.racket-lang.org/framework/Keymap.html?q=set-keymap#%28def._%28%28lib._framework%2Fmain..rkt%29._keymap~3asetup-global%29%29
+  (send editor set-keymap (keymap:get-global))
+  (send canvas set-editor editor))
+(setup-editor)
 (send canvas set-editor editor)
 
 ;; Menus n shit
