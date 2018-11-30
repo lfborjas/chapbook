@@ -30,8 +30,8 @@
                         
                         ;;other mixins here: https://docs.racket-lang.org/framework/Text.html?q=font%20color#%28def._%28%28lib._framework%2Fmain..rkt%29._text~3aforeground-color~3c~25~3e%29%29
                         editor:standard-style-list-mixin))
-(define editor (new
-                (mixins text:basic%)))
+(define editor (new (mixins text:basic%)
+                    [auto-wrap #t]))
 
 ;;; TODO: move these to a module!
 (define is-markdown-filename?
@@ -95,7 +95,10 @@
 ;; second child of `panel`, will be aligned to the right
 (define canvas (new editor-canvas%
                     [parent panel]
-                    [min-width 350]))
+                    [min-width 350]
+                    ;; can be governed by the editor's set-padding
+                    ;;[vertical-inset 15]
+                    [style '(auto-vscroll auto-hscroll)]))
 
 
 ;; Set some UI default preferences, set editor on canvas.
@@ -107,6 +110,13 @@
 ;; foreground color: the green of my faber castell moss green ink:
 ;; https://www.gouletpens.com/products/graf-von-faber-castell-moss-green-75ml-bottled-ink
 (editor:set-default-font-color (make-object color%  45 106 73))
+
+;; https://docs.racket-lang.org/gui/text_.html?q=text%25#%28meth._%28%28%28lib._mred%2Fmain..rkt%29._text~25%29._set-padding%29%29
+(send editor set-padding
+      15 ;; left
+      15 ;; top
+      ;; right and bottom
+      0 0 )
 (send canvas set-editor editor)
 
 ;; Menus n shit
@@ -133,3 +143,7 @@
 
 ; Show the frame by calling its show method
 (send frame show #t)
+
+;;; Notes:
+
+;; interesting for saving when there's changes: https://docs.racket-lang.org/framework/Text.html?q=font%20color#%28meth._%28%28%28lib._framework%2Fmain..rkt%29._text~3abasic~3c~25~3e%29._get-edition-number%29%29
