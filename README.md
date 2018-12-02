@@ -25,4 +25,12 @@ with the examples. For GUI basics, see:
 
 ### Documentation and examples
 
+* https://docs.racket-lang.org/gui/editor-overview.html?q=editors
+* <https://docs.racket-lang.org/gui/keymap_.html?q=set-keymap>
+* <https://docs.racket-lang.org/gui/text_.html#%28meth._%28%28%28lib._mred%2Fmain..rkt%29._text~25%29._after-insert%29%29>
+* <https://docs.racket-lang.org/framework/Color.html?q=spellcheck#%28meth._%28%28%28lib._framework%2Fmain..rkt%29._color~3atext~3c~25~3e%29._get-spell-suggestions%29%29>
+* <https://docs.racket-lang.org/guide/serialization.html#%28tech._serialization%29>
 * https://github.com/alex-hhh/ActivityLog2/blob/c45d62cb1ab5e79c6717d6a247406d31084e220d/rkt/widgets/notes-input-field.rkt#L61-L69
+* https://alex-hhh.github.io/2018/11/an-enhanced-text-field-gui-control-for-racket.html
+* https://alex-hhh.github.io/2018/10/chess-game-using-racket-s-pasteboard.html
+
