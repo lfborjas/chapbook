@@ -26,10 +26,11 @@
 ;;; From: http://docs.racket-lang.org/gui/editor-overview.html
 ;; mixins: https://docs.racket-lang.org/guide/classes.html#%28part._.Mixins%29
 ;;
-(define mixins (compose text:foreground-color-mixin
+(define mixins (compose
+                text:foreground-color-mixin
                         
-                        ;;other mixins here: https://docs.racket-lang.org/framework/Text.html?q=font%20color#%28def._%28%28lib._framework%2Fmain..rkt%29._text~3aforeground-color~3c~25~3e%29%29
-                        editor:standard-style-list-mixin))
+                ;;other mixins here: https://docs.racket-lang.org/framework/Text.html?q=font%20color#%28def._%28%28lib._framework%2Fmain..rkt%29._text~3aforeground-color~3c~25~3e%29%29
+                editor:standard-style-list-mixin))
 (define editor (new (mixins text:basic%)
                     [auto-wrap #t]))
 
@@ -49,7 +50,7 @@
 ;; (callbacks always get the component and the event)
 (define open-file-in-editor
   (λ (component event)
-    (when (member (send event get-event-type) '(list-box-dclick list-box))
+     (when (member (send event get-event-type) '(list-box-dclick list-box))
       (let ([filename (send component get-string-selection)])
         (send editor load-file (in-project filename) 'text)
         (set! current-file filename)))))
